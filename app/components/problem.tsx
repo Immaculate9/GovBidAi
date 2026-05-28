@@ -33,8 +33,8 @@ const problems = [
 export default function ProblemSection() {
   return (
     <section
-      id="mission"
-      className="relative w-full overflow-hidden bg-[#040816] py-28"
+      id="problem"
+      className="relative w-full overflow-hidden bg-[#040816] py-28 scroll-mt-24"
     >
       {/* Glow */}
       <div className="absolute left-[-10%] top-[10%] h-[400px] w-[400px] rounded-full bg-cyan-500/10 blur-3xl" />

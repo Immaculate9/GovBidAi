@@ -1,9 +1,10 @@
 {
-  "name": "govbidai",
+  "name": "govnBidAI",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:clean": "node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\" && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -12,6 +13,7 @@
     "@formspree/react": "^2.5.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@marsidev/react-turnstile": "^1.5.2",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
     "next": "14.0.3",

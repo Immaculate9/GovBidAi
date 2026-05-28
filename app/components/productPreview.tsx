@@ -1,11 +1,47 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Sparkles, ShieldCheck, FileText } from "lucide-react";
+import { ArrowUpRight, Sparkles, ShieldCheck, FileText, X } from "lucide-react";
+
+const demoInsight = {
+  title: "Cybersecurity Infrastructure Support",
+  agency: "Department of Defense",
+  score: "High fit",
+  summary:
+    "Strong alignment with your cloud security certifications, prior DoD task orders, and NAICS 541512.",
+  highlights: [
+    "Past performance: 3 similar awards in the last 24 months",
+    "Set-aside: Small business — eligible",
+    "Response due: 18 days — within your capture window",
+  ],
+  nextStep:
+    "Generate a compliance matrix and draft a 2-page capability statement.",
+};
 
 export default function ProductPreviewSection() {
+  const [insightOpen, setInsightOpen] = useState(false);
+
+  useEffect(() => {
+    if (!insightOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setInsightOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [insightOpen]);
+
   return (
-    <section className="relative w-full overflow-hidden bg-[#060B1A] py-28">
+    <>
+    <section
+      id="product"
+      className="relative w-full overflow-hidden bg-[#060B1A] py-28 scroll-mt-24"
+    >
       {/* Background Effects */}
       <div className="absolute right-[-10%] top-[10%] h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-3xl" />
       <div className="absolute left-[-10%] bottom-[10%] h-[400px] w-[400px] rounded-full bg-cyan-500/10 blur-3xl" />
@@ -28,7 +64,7 @@ export default function ProductPreviewSection() {
           </h2>
 
           <p className="mt-6 text-lg leading-8 text-gray-400">
-            Explore a preview of the GovBidAI platform experience, designed to
+            Explore a preview of the GovnBidAI platform experience, designed to
             help businesses identify, analyze, and pursue federal opportunities
             more strategically.
           </p>
@@ -80,17 +116,20 @@ export default function ProductPreviewSection() {
                     {
                       title: "Cybersecurity Infrastructure Support",
                       agency: "Department of Defense",
-                      score: "94%",
+                      score: "High",
+                      width: "88%",
                     },
                     {
                       title: "Cloud Migration Modernization",
                       agency: "U.S. Air Force",
-                      score: "91%",
+                      score: "Strong",
+                      width: "76%",
                     },
                     {
                       title: "Enterprise Data Analytics",
                       agency: "Department of Energy",
-                      score: "89%",
+                      score: "Good",
+                      width: "68%",
                     },
                   ].map((item, index) => (
                     <div
@@ -116,7 +155,7 @@ export default function ProductPreviewSection() {
                       <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/10">
                         <div
                           className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"
-                          style={{ width: item.score }}
+                          style={{ width: item.width }}
                         />
                       </div>
                     </div>
@@ -169,7 +208,11 @@ export default function ProductPreviewSection() {
                     categories.
                   </p>
 
-                  <button className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-cyan-300">
+                  <button
+                    type="button"
+                    onClick={() => setInsightOpen(true)}
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-cyan-300 transition hover:text-white"
+                  >
                     View Recommendation
                     <ArrowUpRight className="h-4 w-4" />
                   </button>
@@ -180,5 +223,79 @@ export default function ProductPreviewSection() {
         </div>
       </div>
     </section>
+
+      {insightOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="insight-title"
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-black/70"
+            onClick={() => setInsightOpen(false)}
+            aria-label="Close"
+          />
+          <div className="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#0B1220] p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs uppercase tracking-wider text-cyan-300">
+                  AI recommendation · demo
+                </p>
+                <h3
+                  id="insight-title"
+                  className="mt-2 text-xl font-semibold text-white"
+                >
+                  {demoInsight.title}
+                </h3>
+                <p className="mt-1 text-sm text-gray-400">{demoInsight.agency}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setInsightOpen(false)}
+                className="rounded-lg p-1 text-gray-400 hover:text-white"
+                aria-label="Close"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <p className="mt-4 inline-block rounded-lg bg-cyan-500/10 px-3 py-1 text-sm font-semibold text-cyan-300">
+              {demoInsight.score} · demo scoring
+            </p>
+
+            <p className="mt-4 text-sm leading-7 text-gray-300">
+              {demoInsight.summary}
+            </p>
+
+            <ul className="mt-4 space-y-2">
+              {demoInsight.highlights.map((item) => (
+                <li
+                  key={item}
+                  className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-gray-300"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-5 rounded-xl border border-cyan-400/20 bg-cyan-500/10 p-4">
+              <p className="text-xs font-medium uppercase text-cyan-300">
+                Suggested next step
+              </p>
+              <p className="mt-2 text-sm text-gray-200">{demoInsight.nextStep}</p>
+            </div>
+
+            <Link
+              href="/contact"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-cyan-500 py-3 text-sm font-medium text-black transition hover:bg-cyan-400"
+            >
+              Request full platform access
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

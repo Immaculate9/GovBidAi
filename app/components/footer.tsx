@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Sparkles, ArrowRight, Mail, ShieldCheck } from "lucide-react";
-import { FaLinkedin } from "react-icons/fa";
+import { Sparkles, Mail, MapPin, ShieldCheck } from "lucide-react";
+import { CONTACT_EMAIL, LOCATION_LABEL } from "../lib/site";
+import EarlyAccessForm from "./earlyAccessForm";
+import { platformTools } from "../lib/platformTools";
 
 export default function FooterSection() {
   return (
     <footer
-      id="contact"
-      className="relative w-full overflow-hidden border-t border-white/10 bg-[#040816]"
+      id="early-access"
+      className="relative w-full overflow-hidden border-t border-white/10 bg-[#040816] scroll-mt-24"
     >
       {/* Background Glow */}
       <div className="absolute left-[-10%] top-0 h-[350px] w-[350px] rounded-full bg-cyan-500/10 blur-3xl" />
@@ -55,30 +57,15 @@ export default function FooterSection() {
                   beta availability.
                 </p>
 
-                {/* Form */}
-                <div className="mt-6 space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-sm text-white outline-none placeholder:text-gray-500 focus:border-cyan-400/30"
-                  />
-
-                  <input
-                    type="email"
-                    placeholder="Business Email"
-                    className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-sm text-white outline-none placeholder:text-gray-500 focus:border-cyan-400/30"
-                  />
-
-                  <button className="flex w-full items-center justify-center gap-2 rounded-2xl bg-cyan-500 px-6 py-4 font-medium text-black transition hover:bg-cyan-400">
-                    Request Access
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                </div>
+                <EarlyAccessForm variant="footer" />
 
                 {/* Secure */}
-                <div className="mt-5 flex items-center gap-2 text-xs text-gray-500">
-                  <ShieldCheck className="h-4 w-4 text-cyan-300" />
-                  Enterprise-grade procurement intelligence platform
+                <div className="mt-5 space-y-2 text-xs text-gray-500">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 shrink-0 text-cyan-300" />
+                    SAM.gov-aligned workflows · encryption in transit
+                  </div>
+                  <p>Preview site — not affiliated with SAM.gov.</p>
                 </div>
               </div>
             </div>
@@ -95,7 +82,7 @@ export default function FooterSection() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-white">GovBidAI</h3>
+                <h3 className="text-xl font-semibold text-white">GovnBidAI</h3>
 
                 <p className="text-sm text-gray-500">
                   Procurement Intelligence
@@ -117,18 +104,13 @@ export default function FooterSection() {
             </h4>
 
             <ul className="mt-6 space-y-4">
-              {[
-                "AI Matching",
-                "P-Win Scoring",
-                "Proposal Automation",
-                "Compliance Intelligence",
-              ].map((item) => (
-                <li key={item}>
+              {platformTools.map((tool) => (
+                <li key={tool.id}>
                   <Link
-                    href="#"
+                    href="/#features"
                     className="text-sm text-gray-400 transition hover:text-white"
                   >
-                    {item}
+                    {tool.title}
                   </Link>
                 </li>
               ))}
@@ -142,18 +124,22 @@ export default function FooterSection() {
             </h4>
 
             <ul className="mt-6 space-y-4">
-              {["About", "Mission", "Enterprise Preview", "Contact"].map(
-                (item) => (
-                  <li key={item}>
-                    <Link
-                      href={item === "Contact" ? "/contact" : "#solution"}
-                      className="text-sm text-gray-400 transition hover:text-white"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ),
-              )}
+              {[
+                { label: "Mission", href: "/#mission" },
+                { label: "Features", href: "/#features" },
+                { label: "AI Chat", href: "/#assistant" },
+                { label: "Product", href: "/#product" },
+                { label: "Contact", href: "/contact" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-gray-400 transition hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -164,30 +150,32 @@ export default function FooterSection() {
             </h4>
 
             <div className="mt-6 space-y-5">
-              <div className="flex items-center gap-3 text-sm text-gray-400">
-                <Mail className="h-4 w-4 text-cyan-300" />
-                contact@govbidai.com
-              </div>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="flex items-center gap-3 text-sm text-gray-400 transition hover:text-white"
+              >
+                <Mail className="h-4 w-4 shrink-0 text-cyan-300" />
+                {CONTACT_EMAIL}
+              </a>
 
-              <div className="flex items-center gap-3 text-sm text-gray-400">
-                {/* <Linkedin className="h-4 w-4 text-cyan-300" /> */}
-                <FaLinkedin className="h-5 w-5 text-cyan-300" />
-                LinkedIn
-              </div>
+              <p className="flex items-start gap-3 text-sm text-gray-400">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
+                {LOCATION_LABEL}
+              </p>
             </div>
           </div>
         </div>
 
         {/* Bottom */}
         <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-gray-500 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} GovBidAI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} GovnBidAI. All rights reserved.</p>
 
           <div className="flex items-center gap-6">
-            <Link href="#" className="transition hover:text-white">
+            <Link href="/privacy" className="transition hover:text-white">
               Privacy Policy
             </Link>
 
-            <Link href="#" className="transition hover:text-white">
+            <Link href="/terms" className="transition hover:text-white">
               Terms of Service
             </Link>
           </div>

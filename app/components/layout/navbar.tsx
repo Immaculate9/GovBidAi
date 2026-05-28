@@ -11,7 +11,8 @@ export default function Navbar() {
   const navItems = [
     { label: "Mission", href: "/#mission" },
     { label: "Features", href: "/#features" },
-    // { label: "Product", href: "#product" },
+    { label: "AI Chat", href: "/#assistant" },
+    { label: "Product", href: "/#product" },
     { label: "Contact", href: "/contact" },
   ];
 
@@ -25,7 +26,7 @@ export default function Navbar() {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold text-white">GovBidAI</h2>
+            <h2 className="text-lg font-semibold text-white">GovnBidAI</h2>
 
             <p className="text-xs text-gray-500">Procurement Intelligence</p>
           </div>
@@ -44,7 +45,7 @@ export default function Navbar() {
           ))}
 
           <Link
-            href="/contact"
+            href="/#early-access"
             className="rounded-xl bg-cyan-500 px-5 py-3 text-sm font-medium text-black transition hover:bg-cyan-400"
           >
             Request Access
@@ -87,7 +88,7 @@ export default function Navbar() {
               ))}
 
               <Link
-                href="/contact"
+                href="/#early-access"
                 onClick={() => setMobileOpen(false)}
                 className="mt-4 flex items-center justify-center rounded-xl bg-cyan-500 px-5 py-3 text-sm font-medium text-black transition hover:bg-cyan-400"
               >

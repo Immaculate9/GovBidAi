@@ -6,47 +6,63 @@ import {
   BrainCircuit,
   ShieldCheck,
   TrendingUp,
+  Lock,
+  Database,
 } from "lucide-react";
 
 const stats = [
   {
     icon: FileSearch,
-    value: "50K+",
-    label: "Federal Opportunities Analyzed",
+    value: "SAM.gov-ready",
+    label: "Opportunity discovery",
     description:
-      "AI-powered procurement analysis across multiple government sources.",
+      "Designed to align with federal notice workflows and your company profile.",
   },
   {
     icon: BrainCircuit,
-    value: "94%",
-    label: "Opportunity Match Accuracy",
+    value: "Guided",
+    label: "Match & scoring",
     description:
-      "Advanced multidimensional scoring based on procurement intelligence.",
+      "Multidimensional fit signals—not a guarantee of award outcomes.",
   },
   {
     icon: ShieldCheck,
-    value: "Automated",
-    label: "Compliance Intelligence",
-    description: "Generate compliance matrices and proposal insights faster.",
+    value: "Structured",
+    label: "Compliance support",
+    description:
+      "Matrices and checklists to help teams review requirements faster.",
   },
   {
     icon: TrendingUp,
-    value: "AI-Driven",
-    label: "Procurement Insights",
+    value: "Informed",
+    label: "Capture insights",
     description:
-      "Historical award analysis and competitor intelligence in real-time.",
+      "Historical award context and competitor patterns to support decisions.",
+  },
+];
+
+const trustItems = [
+  {
+    icon: Database,
+    text: "Built for SAM.gov-aligned procurement workflows (preview)",
+  },
+  {
+    icon: Lock,
+    text: "Encryption in transit · least-privilege access by design",
+  },
+  {
+    icon: ShieldCheck,
+    text: "Security & compliance roadmap for enterprise onboarding",
   },
 ];
 
 export default function StatsSection() {
   return (
     <section className="relative w-full overflow-hidden border-t border-white/5 bg-[#060B1A] py-24">
-      {/* Background Glow */}
       <div className="absolute left-0 top-0 h-[300px] w-[300px] rounded-full bg-cyan-500/10 blur-3xl" />
-      <div className="absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-blue-500/10 blur-3xl" />
+      <div className="absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-blue-500/10 blur-3xl" aria-hidden />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -63,46 +79,33 @@ export default function StatsSection() {
           </h2>
 
           <p className="mt-6 text-lg leading-8 text-gray-400">
-            GovBidAI combines procurement data, AI-driven analysis, and proposal
-            intelligence into a unified platform designed to help SMBs compete
-            more effectively in federal markets.
+            GovnBidAI combines procurement data, guided analysis, and proposal
+            support for SMB teams—preview metrics below are illustrative.
           </p>
         </motion.div>
 
-        {/* Stats Grid */}
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {stats.map((item, index) => {
             const Icon = item.icon;
-
             return (
               <motion.div
-                key={index}
+                key={item.label}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
                 className="group rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/20 hover:bg-white/[0.07]"
               >
-                {/* Icon */}
                 <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10 ring-1 ring-cyan-400/20 transition group-hover:bg-cyan-500/20">
                   <Icon className="h-7 w-7 text-cyan-300" />
                 </div>
-
-                {/* Value */}
-                <h3 className="text-4xl font-bold tracking-tight text-white">
+                <h3 className="text-2xl font-bold tracking-tight text-white">
                   {item.value}
                 </h3>
-
-                {/* Label */}
                 <p className="mt-3 text-lg font-medium text-white">
                   {item.label}
                 </p>
-
-                {/* Description */}
                 <p className="mt-4 text-sm leading-7 text-gray-400">
                   {item.description}
                 </p>
@@ -110,6 +113,27 @@ export default function StatsSection() {
             );
           })}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mt-12 flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:flex-row md:items-center md:justify-between md:gap-8"
+        >
+          {trustItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.text}
+                className="flex items-start gap-3 text-sm text-gray-400"
+              >
+                <Icon className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
+                <span>{item.text}</span>
+              </div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );
